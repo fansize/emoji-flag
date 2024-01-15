@@ -3,30 +3,33 @@
 import {
   Carousel,
   CarouselContent,
-  CarouselItem
+  CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+import BioCard from "./BioCard";
 
 export default function HeroCarousel() {
   return (
     <Carousel
-      className="mt-20 w-full"
+      className="mt-2 w-full"
       plugins={[
         Autoplay({
-          delay: 7000
+          delay: 7000,
         }),
-        WheelGesturesPlugin()
+        WheelGesturesPlugin(),
       ]}
       opts={{
         loop: true,
-        align: "center"
+        align: "center",
       }}
     >
       <CarouselContent>
         {Array.from({ length: 6 }).map((_, index) => (
-          <CarouselItem key={index} className="lg:basis-1/2">
-            <div className="p-2 bg-neutral-100 h-[550px] rounded-lg flex flex-col justify-center items-center mx-4 md:mx-0"></div>
+          <CarouselItem key={index} className="lg:basis-2/5 p-2">
+            <div className="border border-slate-100 bg-white shadow h-[250px] rounded-lg flex flex-col justify-center items-center">
+              <BioCard />
+            </div>
           </CarouselItem>
         ))}
       </CarouselContent>

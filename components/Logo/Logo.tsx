@@ -12,19 +12,14 @@ export default function Logo({ size, withText }: LogoProps) {
     <Link
       href="/"
       className={cn(
-        "flex flex-row justify-start items-end ",
-        withText && "gap-3"
+        "flex flex-row justify-start items-center ",
+        withText && "gap-4"
       )}
     >
       <div className={cn("relative", size)}>
-        <Image
-          src="/logo.png"
-          alt="Logo 5th Side Software Studio"
-          fill
-          priority
-        />
+        <Image src="/logo.svg" alt="Logo" fill priority />
       </div>
-      {withText && <p className="text-lg font-semibold">5th Side</p>}
+      {withText && <p className="text-2xl font-black">Emoji Flag</p>}
     </Link>
   );
 }

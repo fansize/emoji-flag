@@ -10,10 +10,10 @@ export default function HeroPill() {
         target="_blank"
         className="flex flex-row justify-start items-center w-fit p-[3px] gap-1"
       >
-        <div className="bg-blue-500 text-white p-1 rounded-full">
+        {/* <div className="bg-blue-500 text-white p-1 rounded-full">
           <Twitter className="h-4 w-4" />
-        </div>
-        <div className="flex flex-row justify-start items-center gap-1 mr-2 text-blue-500">
+        </div> */}
+        <div className="flex flex-row justify-start items-center gap-1 mx-2 text-blue-500">
           <p className="text-sm font-medium">@Jaume_0to1</p>
           <ArrowRight className="h-4 w-4" />
         </div>

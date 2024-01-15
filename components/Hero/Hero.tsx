@@ -16,11 +16,11 @@ export default function Hero() {
 
   return (
     <>
-      <div className="flex flex-col justify-start items-center p-10">
-        {/* <HeroPill /> */}
-        <h1 className="text-4xl font-bold text-center tracking-wide mb-6 max-w-[700px]">
+      <div className="flex flex-col justify-start items-center p-6 gap-6">
+        <h1 className="text-xl font-bold text-center tracking-wide max-w-[700px]">
           Travel Flag Emoji
         </h1>
+        <HeroCarousel />
       </div>
     </>
   );
