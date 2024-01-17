@@ -1,4 +1,4 @@
-import { useState, MouseEventHandler } from "react";
+"use client";
 import { Emoji } from "@/lib/types";
 
 export default function EmojiCard(emoji: Emoji, selected: boolean) {
@@ -9,11 +9,11 @@ export default function EmojiCard(emoji: Emoji, selected: boolean) {
       } hover:shadow-lg hover:shadow-gray-300/50 active:shadow-sm transition-all`}
     >
       <div className="flex flex-col justify-center items-center text-center">
-        <p className="text-6xl">
+        <p className="text-5xl">
           {String.fromCodePoint(emoji.code_point[0])}
           {String.fromCodePoint(emoji.code_point[1])}
         </p>
-        <p className="text-sm">{emoji.description}</p>
+        <p className="text-sm line-clamp-1">{emoji.description}</p>
       </div>
     </div>
   );

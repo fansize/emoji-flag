@@ -1,6 +1,6 @@
 "use client";
 import { Emoji } from "@/lib/types";
-import EmojiCard from "@/components/FlagCard/FlagCard";
+import EmojiCard from "@/components/Sections/FlagGrid/FlagCard";
 import emoji_flags from "@/data/emoji_flags.json";
 
 export default function FlagGrid({
