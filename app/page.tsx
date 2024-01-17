@@ -2,8 +2,8 @@
 import { useState } from "react";
 import Hero from "@/components/Hero/Hero";
 import FlagGrid from "@/components/Sections/FlagGrid/FlagGrid";
-import Navbar from "@/components/Navbar/Navbar";
-import SearchBar from "@/components/SearchBar/SearchBar";
+import Navbar from "@/components/Header/Navbar/Navbar";
+import SearchBar from "@/components/Sections/SearchBar/SearchBar";
 
 export default function Home() {
   const [countries, setCountries] = useState<string[]>([]);

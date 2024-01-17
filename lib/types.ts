@@ -5,3 +5,8 @@ export type Emoji = {
   description: string;
   comments: string;
 };
+
+export type Post = {
+  id: string;
+  title: string;
+};

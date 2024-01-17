@@ -1,18 +1,24 @@
 "use client";
-
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
-import BioCard from "./BioCard";
+import BioCard from "@/components/Hero/BioCard";
+import { BioCardProps } from "@/components/Hero/BioCard";
 
-export default function HeroCarousel() {
+type Props = {
+  bioCards: BioCardProps[];
+};
+
+export default function HeroCarousel({ bioCards }: Props) {
   return (
     <Carousel
-      className="mt-2 w-full"
+      className="w-full"
       plugins={[
         Autoplay({
           delay: 7000,
@@ -33,6 +39,24 @@ export default function HeroCarousel() {
           </CarouselItem>
         ))}
       </CarouselContent>
+    </Carousel>
+  );
+}
+
+export function CarouselDemo({ bioCards }: Props) {
+  return (
+    <Carousel className="w-full max-w-xl">
+      <CarouselContent>
+        {bioCards.map((bioCard, index) => (
+          <CarouselItem key={index}>
+            <div className="border border-slate-200 bg-white h-[200px] rounded-lg flex flex-col justify-center items-center">
+              <BioCard {...bioCard} />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   );
 }

@@ -1,12 +1,13 @@
 {
-  "name": "emojiflags",
-  "version": "1.0.0",
+  "name": "emoji_flag",
+  "version": "1.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "json-server --watch data/db.json --port 3001"
   },
   "dependencies": {
     "@radix-ui/react-aspect-ratio": "^1.0.3",
@@ -19,8 +20,10 @@
     "embla-carousel-autoplay": "^8.0.0-rc17",
     "embla-carousel-react": "^8.0.0-rc17",
     "embla-carousel-wheel-gestures": "^8.0.0-rc05",
+    "json-server": "^1.0.0-alpha.21",
     "lucide-react": "^0.300.0",
     "next": "14.0.4",
+    "openai": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "react-tweet": "^3.2.0",
