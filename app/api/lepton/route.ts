@@ -6,7 +6,7 @@ const openai = new OpenAI({
   baseURL: "https://mixtral-8x7b.lepton.run/api/v1/",
 });
 
-export async function getBio() {
+async function getBio() {
   const completion = await openai.chat.completions.create({
     messages: [{ role: "user", content: "say hello" }],
     model: "mixtral-8x7b",
