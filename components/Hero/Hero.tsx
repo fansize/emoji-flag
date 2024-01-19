@@ -6,7 +6,7 @@ import { CarouselDemo } from "@/components/Hero/HeroCarousel";
 import { BioCardProps } from "@/components/Hero/BioCard";
 
 type Props = {
-  countries: string[];
+  countries: string;
 };
 
 export default function Hero({ countries }: Props) {

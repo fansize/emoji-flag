@@ -1,11 +1,11 @@
+import OpenAI from "openai";
 import { Post } from "@/lib/types";
 import { BioCardProps } from "@/components/Hero/BioCard";
 
-export async function getPosts() {
-  const response = await fetch("http://localhost:3001/posts");
-  const body = await response.json();
-  assertIsPost(body);
-  return body;
+export async function fetchBio() {
+  const response = await fetch("/api/lepton");
+  const data = await response.json();
+  return data;
 }
 
 export async function getBios() {
@@ -13,24 +13,6 @@ export async function getBios() {
   const body = await response.json();
   assertIsBio(body);
   return body;
-}
-
-export function assertIsPost(postData: unknown): asserts postData is Post[] {
-  if (!Array.isArray(postData)) {
-    throw new Error("Posts isn't a array");
-  }
-  if (postData.length === 0) {
-    return;
-  }
-
-  postData.forEach((post) => {
-    if (typeof post.id !== "string") {
-      throw new Error("Post id isn't a string");
-    }
-    if (typeof post.title !== "string") {
-      throw new Error("Post title isn't a string");
-    }
-  });
 }
 
 export function assertIsBio(
@@ -49,6 +31,31 @@ export function assertIsBio(
     }
     if (typeof bio.bio !== "string") {
       throw new Error("bio isn't a string");
+    }
+  });
+}
+
+export async function getPosts() {
+  const response = await fetch("http://localhost:3001/posts");
+  const body = await response.json();
+  assertIsPost(body);
+  return body;
+}
+
+export function assertIsPost(postData: unknown): asserts postData is Post[] {
+  if (!Array.isArray(postData)) {
+    throw new Error("Posts isn't a array");
+  }
+  if (postData.length === 0) {
+    return;
+  }
+
+  postData.forEach((post) => {
+    if (typeof post.id !== "string") {
+      throw new Error("Post id isn't a string");
+    }
+    if (typeof post.title !== "string") {
+      throw new Error("Post title isn't a string");
     }
   });
 }
