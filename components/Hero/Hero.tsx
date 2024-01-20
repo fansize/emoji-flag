@@ -17,43 +17,31 @@ export default function Hero({ countries }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [bioProps, setBioProps] = useState<BioCardProps[]>([]);
 
-  // useEffect(() => {
-  //   let cancel = false;
-  //   const fetchBio = async () => {
-  //     const response = await fetch("/api/lepton");
-  //     if (!cancel) {
-  //       const data = await response.json();
-  //       if (data.bio) {
-  //         setBioProps(data.bio);
-  //       }
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   fetchBio();
-  //   return () => {
-  //     cancel = true;
-  //   };
-  // }, []);
-
   useEffect(() => {
     let cancel = false;
     getBios().then((data) => {
       if (!cancel) {
-        setBioProps(data);
+        const updatedData = data.map((bio) => {
+          return {
+            ...bio,
+            bio: countries,
+          };
+        });
+        console.log(updatedData);
+        setBioProps(updatedData);
         setIsLoading(false);
       }
     });
     return () => {
       cancel = true;
     };
-  }, []);
+  }, [countries]);
 
   return (
-    <div className="flex flex-col justify-start items-center py-6 gap-6">
+    <div className="flex flex-col justify-start items-center p-6 gap-6">
       <h1 className="underline decoration-wavy text-xl font-bold text-center tracking-wide max-w-[700px]">
         Travel Flag Emoji
       </h1>
-      <p>I have traveed to {countries}</p>
       <CarouselDemo bioCards={bioProps} />
     </div>
   );

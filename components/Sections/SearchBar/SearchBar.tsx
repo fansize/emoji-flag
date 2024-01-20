@@ -37,7 +37,7 @@ export default function Hero() {
         ))}
       </div>
 
-      <div className="flex w-full max-w-sm items-center space-x-2">
+      <div className="flex w-full max-w-xs items-center space-x-2">
         <Input
           type="email"
           placeholder="Search country name"
