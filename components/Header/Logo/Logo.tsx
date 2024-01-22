@@ -19,7 +19,7 @@ export default function Logo({ size, withText }: LogoProps) {
       <div className={cn("relative", size)}>
         <Image src="/logo.svg" alt="Logo" fill priority />
       </div>
-      {withText && <p className="text-2xl font-black">Emoji Flag</p>}
+      {withText && <p className="sm:text-4xl text-2xl font-black">Fmoji</p>}
     </Link>
   );
 }

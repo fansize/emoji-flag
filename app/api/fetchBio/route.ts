@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     prompt?: string;
   };
 
-  console.log("start prompt", prompt);
+  console.log("start:", prompt);
 
   if (!prompt) {
     return new Response("No prompt in the request", { status: 400 });
@@ -31,12 +31,7 @@ export async function POST(request: Request) {
     messages: [
       {
         role: "user",
-        content: `Generate 3 twitter biographies with no hashtags and clearly labeled "1.", "2.", and "3.". 
-        Only return these 3 twitter bios, nothing else. Make sure each generated biography is less than 300 characters, 
-        has short sentences that are found in Twitter bios, and feel free to use this context as well: 
-        ${prompt}
-        
-        Output:\n`,
+        content: prompt,
       },
     ],
   });
