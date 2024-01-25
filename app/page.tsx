@@ -5,6 +5,9 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import Image from "next/image";
 import Navbar from "@/components/Header/Navbar/Navbar";
+import { Card } from "@/components/ui/card";
+import Footer_basic from "@/components/Footer/Footer_basic";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
@@ -41,18 +44,20 @@ export default function Page() {
   });
   const [flags, setFlags] = useState<Emoji[]>([]);
   const [story, setStory] = useState<string>("Professional");
-  const bioRef = useRef<null | HTMLDivElement>(null);
-  const [prompt, setPrompt] = useState<string>("");
 
-  const basic_prompt1 = `Generate 3 twitter biographies with no hashtags and clearly labeled "1.", "2.", and "3.". 
-  Only return these 3 twitter bios, nothing else. Make sure each generated biography is less than 300 characters, 
+  const basic_prompt2 = `Generate 3 twitter biographies with no hashtags and clearly labeled "1.", "2.", and "3.". 
+  Only return these 3 twitter bios, nothing else. Make sure each generated biography is less than 160 characters, 
   has short sentences that are found in Twitter bios, and feel free to use this context as well: 
   
   Output:\n`;
 
-  const basic_prompt2 = `Generate 3 succinct, attention-grabbing Twitter biographies for a traveler with no hashtags and clearly labeled "1.", "2.", and "3.". 
+  const basic_prompt1 = `Generate 3 succinct, attention-grabbing Twitter biographies for a traveler with no hashtags and clearly labeled "1.", "2.", and "3.". 
   Act as a social media specialist, the biographies should clearly convey the advantages and unique features of the travel and why it stands out from the rest.
-  Please use this context as well:`;
+  Make sure each generated biography is less than 160 characters.
+  Please use this context as well:
+  
+  Output:\n
+  `;
 
   useEffect(() => {
     const flagsString = flags.map((flag) => flag.native).join(" ");
@@ -64,7 +69,6 @@ export default function Page() {
 
     console.log(prompt);
 
-    setPrompt(prompt);
     setInput(prompt);
   }, [story, flags]);
 
@@ -72,36 +76,80 @@ export default function Page() {
     setFlags((prevFlags) => {
       const updatedFlags = [...prevFlags, emoji];
       const inputFlags = updatedFlags.map((flag) => flag.native).join(", ");
-
-      // setInput(basic_prompt1 + inputFlags);
       return updatedFlags;
     });
   };
 
   return (
     <div>
-      <div className="flex flex-col items-center shadow-sm bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] pb-8">
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+        toastOptions={{ duration: 2000 }}
+      />
+
+      <div className="flex flex-col items-center shadow-sm bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] px-6 pb-9">
         <Navbar />
-        <h1 className="sm:text-6xl text-4xl font-bold text-center tracking-wide pb-6">
-          Travel Flag Emoji
-        </h1>
-        <div className="flex flex-row items-center">
-          <Image
-            src="/openai-logo.jpeg"
-            width={30}
-            height={30}
-            alt="OpenAI logo"
-          />
-          <p>GPT-3.5</p>
+        <div className="flex flex-col justify-center items-center gap-5">
+          <div className="flex flex-row items-center">
+            <p className="text-neutral-600 font-bold">
+              {`Generate your travel story by emoji flags with`}
+            </p>
+            <Image
+              src="/openai-logo.jpeg"
+              width={30}
+              height={30}
+              alt="OpenAI logo"
+            />
+            <p className="text-black font-bold">GPT-3.5</p>
+          </div>
+          {/* <p className="text-neutral-600 text-xl text-center">
+            {`So users 😀 will engage with your site and convert. Something like
+            "Stop wasting time. Use this temaplate."`}
+          </p> */}
+
+          <div className="flex flex-col md:flex-row gap-5">
+            {completion
+              .substring(completion.indexOf("1") + 3)
+              .split(/2\.|3\./)
+              .map((generatedBio) => {
+                return (
+                  <Card
+                    className="flex justify-between space-x-4 w-full md:w-80 p-4 border bg-white rounded-xl shadow-sm hover:bg-gray-100 transition cursor-copy"
+                    onClick={() => {
+                      navigator.clipboard.writeText(generatedBio);
+                      toast.success("Successfully Copied!");
+                    }}
+                    key={generatedBio}
+                  >
+                    <Avatar>
+                      <AvatarImage src="https://github.com/vercel.png" />
+                      <AvatarFallback>VC</AvatarFallback>
+                    </Avatar>
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-semibold">@Fmoji</h4>
+                      {generatedBio ? (
+                        <p className="text-sm">{generatedBio}</p>
+                      ) : (
+                        <p className="text-sm">
+                          The React Framework – created and maintained by
+                          @vercel.
+                        </p>
+                      )}
+                      <div className="flex items-center pt-2">
+                        <span className="text-xs text-muted-foreground">
+                          999 Followers
+                        </span>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+          </div>
         </div>
-        <Toaster
-          position="bottom-right"
-          reverseOrder={false}
-          toastOptions={{ duration: 2000 }}
-        />
       </div>
 
-      <div className="flex flex-col md:flex-row w-full justify-center gap-9 p-6">
+      <div className="flex flex-col md:flex-row w-full justify-center gap-9 px-6 pt-9">
         <Picker
           data={data}
           categories={["flags"]}
@@ -169,38 +217,7 @@ export default function Page() {
           </form>
         </div>
       </div>
-
-      <div className="flex flex-col justify-center space-y-10  p-6">
-        {completion && (
-          <>
-            <h2
-              className="text-2xl font-bold text-slate-900 mx-auto"
-              ref={bioRef}
-            >
-              Your generated stories
-            </h2>
-            <div className="flex flex-col space-y-4 items-center justify-start max-w-4xl mx-auto">
-              {completion
-                .substring(completion.indexOf("1") + 3)
-                .split(/2\.|3\./)
-                .map((generatedBio) => {
-                  return (
-                    <div
-                      className="bg-white rounded-xl shadow-sm p-4 hover:bg-gray-100 transition cursor-copy border"
-                      onClick={() => {
-                        navigator.clipboard.writeText(generatedBio);
-                        toast.success("Successfully copied!");
-                      }}
-                      key={generatedBio}
-                    >
-                      <p>{generatedBio}</p>
-                    </div>
-                  );
-                })}
-            </div>
-          </>
-        )}
-      </div>
+      <Footer_basic />
     </div>
   );
 }
